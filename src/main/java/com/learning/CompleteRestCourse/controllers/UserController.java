@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.learning.CompleteRestCourse.exceptions.UserNotFoundException;
 import com.learning.CompleteRestCourse.models.User;
 import com.learning.CompleteRestCourse.service.UserService;
 
@@ -28,6 +29,9 @@ public class UserController {
 	@RequestMapping(value="/users/{id}")
 	public User getUserById(@PathVariable("id") Long id) {
 		User user = userService.getUserById(id);
+		if(user == null) {
+			throw new UserNotFoundException("User with id: " + id + " not found!");
+		}
 		return user;
 	}
 	
